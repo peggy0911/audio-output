@@ -105,18 +105,25 @@ function start() {
     // video: {deviceId: videoSource ? {exact: videoSource} : undefined}
   };
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
-  console.log("for (var key in audioOutputSelect)")
-  for (var key in audioOutputSelect) {
-    console.log(key + " : " + audioOutputSelect[key])
-    if (key != "default" || key != "communications") {
-      var label = audioOutputSelect[key].toLowrCase();
+  console.log("Array.from(audioOutputSelect.options).forEach(function(option_element)")
+  Array.from(audioOutputSelect.options).forEach(function(option_element) {
+    let option_text = option_element.text;
+    let option_value = option_element.value;
+    let is_option_selected = option_element.selected;
+
+    console.log('Option Text : ' + option_text);
+    console.log('Option Value : ' + option_value);
+    console.log('Option Selected : ' + (is_option_selected === true ? 'Yes' : 'No'));
+    console.log("\n\r");
+    if (option_value != "default" || option_value != "communications") {
+      var label = option_text.toLowrCase();
       if (!label.includes("display audio") && !label.includes("bluetooth")) {
         console.log(key + " : " + label + "attachSinkId")
-        attachSinkId(videoElement, audioOutputSelect[key]);
+        attachSinkId(videoElement, option_text);
         break;
       }
     }
-  }
+  });
 }
 
 audioInputSelect.onchange = start;
