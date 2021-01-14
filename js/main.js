@@ -24,9 +24,9 @@ function gotDevices(deviceInfos) {
       select.removeChild(select.firstChild);
     }
   });
+  console.log(deviceInfos)
   for (let i = 0; i !== deviceInfos.length; ++i) {
     const deviceInfo = deviceInfos[i];
-    console.log(deviceInfos)
     const option = document.createElement('option');
     option.value = deviceInfo.deviceId;
     if (deviceInfo.kind === 'audioinput') {
