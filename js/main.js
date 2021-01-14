@@ -50,7 +50,7 @@ function gotDevices(deviceInfos) {
     console.log('selector id: ');
     console.log(select.id);
     if (select == "audioOutput") {
-      console.log("select == audioOutput")
+      console.log("select id == audioOutput")
       // var audioOutputSelectArray = Array.from(audioOutputSelect.options);
       for (let option_element of Array.from(select)) {
         let option_text = option_element.text.toLowerCase();
