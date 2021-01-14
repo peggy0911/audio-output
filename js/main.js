@@ -105,6 +105,18 @@ function start() {
     // video: {deviceId: videoSource ? {exact: videoSource} : undefined}
   };
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+  console.log("for (var key in audioOutputSelect)")
+  for (var key in audioOutputSelect) {
+    console.log(key + " : " + audioOutputSelect[key])
+    if (key != "default" || key != "communications") {
+      var label = audioOutputSelect[key].toLowrCase();
+      if (!label.includes("display audio") && !label.includes("bluetooth")) {
+        console.log(key + " : " + label + "attachSinkId")
+        attachSinkId(videoElement, audioOutputSelect[key]);
+        break;
+      }
+    }
+  }
 }
 
 audioInputSelect.onchange = start;
