@@ -43,36 +43,34 @@ function gotDevices(deviceInfos) {
     }
   }
   selectors.forEach((select, selectorIndex) => {
-    console.log('select: ' + select);
+    console.log('select: ');
     console.log(select);
-    console.log('selectorIndex: ' + selectorIndex);
+    console.log('selectorIndex: ');
     console.log(selectorIndex);
-    if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
-      console.log('select.value: ' + select.value);
-      console.log(select.value);
-      console.log('values[selectorIndex]: ' + values[selectorIndex]);
-      console.log(values[selectorIndex]);
-      select.value = values[selectorIndex];
+    console.log('selector id: ');
+    console.log(select.id);
+    if (select == "audioOutput") {
+      console.log("select == audioOutput")
+      // var audioOutputSelectArray = Array.from(audioOutputSelect.options);
+      for (let option_element of Array.from(select)) {
+        let option_text = option_element.text.toLowerCase();
+        let option_value = option_element.value.toLowerCase();
+        console.log('Option Text : ' + option_text);
+        console.log('Option Value : ' + option_value);
+        console.log("\n\r");
+        if (option_value != "default" || option_value != "communications") {
+          if (!option_text.includes("display audio") && !option_text.includes("bluetooth")) {
+            console.log(option_value + " : " + option_text + "attachSinkId")
+            select.value = values[selectorIndex];
+            break;
+          }
+        }
+      };
+    } else {
+      if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+        select.value = values[selectorIndex];
+      }
     }
-    // console.log("selectors.forEach((select, selectorIndex)")
-    // var audioOutputSelectArray = Array.from(audioOutputSelect.options);
-    // for (let option_element of audioOutputSelectArray) {
-    //   let option_text = option_element.text.toLowerCase();
-    //   let option_value = option_element.value.toLowerCase();
-    //   let is_option_selected = option_element.selected;
-
-    //   console.log('Option Text : ' + option_text);
-    //   console.log('Option Value : ' + option_value);
-    //   console.log('Option Selected : ' + (is_option_selected === true ? 'Yes' : 'No'));
-    //   console.log("\n\r");
-    //   if (option_value != "default" || option_value != "communications") {
-    //     if (!option_text.includes("display audio") && !option_text.includes("bluetooth")) {
-    //       console.log(option_value + " : " + option_text + "attachSinkId")
-    //       attachSinkId(videoElement, option_text);
-    //       break;
-    //     }
-    //   }
-    // };
   });
 }
 
