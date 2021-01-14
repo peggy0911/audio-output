@@ -49,7 +49,7 @@ function gotDevices(deviceInfos) {
     console.log(selectorIndex);
     console.log('selector id: ');
     console.log(select.id);
-    if (select == "audioOutput") {
+    if (select.id == "audioOutput") {
       console.log("select id == audioOutput")
       // var audioOutputSelectArray = Array.from(audioOutputSelect.options);
       for (let option_element of Array.from(select)) {
