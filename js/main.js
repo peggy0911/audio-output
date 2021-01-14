@@ -44,10 +44,14 @@ function gotDevices(deviceInfos) {
   }
   selectors.forEach((select, selectorIndex) => {
     console.log('select: ' + select);
+    console.log(select);
     console.log('selectorIndex: ' + selectorIndex);
+    console.log(selectorIndex);
     if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
       console.log('select.value: ' + select.value);
+      console.log(select.value);
       console.log('values[selectorIndex]: ' + values[selectorIndex]);
+      console.log(values[selectorIndex]);
       select.value = values[selectorIndex];
     }
     // console.log("selectors.forEach((select, selectorIndex)")
