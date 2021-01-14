@@ -61,7 +61,7 @@ function gotDevices(deviceInfos) {
         if (option_value != "default" || option_value != "communications") {
           if (!option_text.includes("display audio") && !option_text.includes("bluetooth")) {
             console.log(option_value + " : " + option_text + "attachSinkId")
-            select.value = values[selectorIndex];
+            select.value = option_element.value;
             break;
           }
         }
