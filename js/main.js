@@ -124,7 +124,7 @@ function start() {
         break;
       }
     }
-  });
+  };
 }
 
 audioInputSelect.onchange = start;
