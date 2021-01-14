@@ -106,7 +106,8 @@ function start() {
   };
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
   console.log("Array.from(audioOutputSelect.options).forEach(function(option_element)")
-  Array.from(audioOutputSelect.options).forEach(function(option_element) {
+  var audioOutputSelectArray = Array.from(audioOutputSelect.options);
+  for (let option_element of audioOutputSelectArray) {
     let option_text = option_element.text;
     let option_value = option_element.value;
     let is_option_selected = option_element.selected;
