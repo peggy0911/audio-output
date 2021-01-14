@@ -42,6 +42,7 @@ function gotDevices(deviceInfos) {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
   }
+  console.log(audioOutputSelect)
   selectors.forEach((select, selectorIndex) => {
     if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
       select.value = values[selectorIndex];
@@ -53,6 +54,9 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
 // Attach audio output device to video element using device/sink ID.
 function attachSinkId(element, sinkId) {
+  console.log("attachSinkId")
+  console.log(element)
+  console.log(sinkId)
   if (typeof element.sinkId !== 'undefined') {
     element.setSinkId(sinkId)
         .then(() => {
