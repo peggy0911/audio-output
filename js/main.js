@@ -130,9 +130,6 @@ function start() {
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
 }
 
-audioInputSelect.onchange = start;
 audioOutputSelect.onchange = changeAudioDestination;
-
-videoSelect.onchange = start;
 
 start();
