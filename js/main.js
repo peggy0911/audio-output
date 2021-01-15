@@ -43,14 +43,15 @@ function gotDevices(deviceInfos) {
     }
   }
   selectors.forEach((select, selectorIndex) => {
-    console.log('select: ');
-    console.log(select);
-    console.log('selectorIndex: ');
-    console.log(selectorIndex);
-    console.log('selector id: ');
-    console.log(select.id);
+    // console.log('select: ');
+    // console.log(select);
+    // console.log('selectorIndex: ');
+    // console.log(selectorIndex);
+    // console.log('selector id: ');
+    // console.log(select.id);
     if (select.id == "audioOutput") {
       console.log("select id == audioOutput")
+      console.log(audioOutputSelect);
       // var audioOutputSelectArray = Array.from(audioOutputSelect.options);
       for (let option_element of Array.from(select.options)) {
         let option_text = option_element.text.toLowerCase();
@@ -62,6 +63,7 @@ function gotDevices(deviceInfos) {
           if (!option_text.includes("display audio") && !option_text.includes("bluetooth")) {
             console.log(option_value + " : " + option_text + "attachSinkId")
             select.value = option_element.value;
+            console.log(audioOutputSelect);
             attachSinkId(videoElement, audioOutputSelect.value);
             break;
           }
