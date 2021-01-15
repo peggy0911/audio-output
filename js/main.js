@@ -53,7 +53,7 @@ function gotDevices(deviceInfos) {
       console.log("select id == audioOutput")
       console.log(audioOutputSelect);
       console.log(audioOutputSelect.value);
-      console.log(audioOutputSelect.text);
+      console.log(audioOutputSelect.options[audioOutputSelect.selectedIndex].text);
       // var audioOutputSelectArray = Array.from(audioOutputSelect.options);
       for (let option_element of Array.from(select.options)) {
         let option_text = option_element.text.toLowerCase();
@@ -67,7 +67,7 @@ function gotDevices(deviceInfos) {
             select.value = option_element.value;
             console.log(audioOutputSelect);
             console.log(audioOutputSelect.value);
-            console.log(audioOutputSelect.text);
+            console.log(audioOutputSelect.options[audioOutputSelect.selectedIndex].text);
             attachSinkId(videoElement, audioOutputSelect.value);
             break;
           }
