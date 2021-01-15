@@ -49,12 +49,11 @@ function gotDevices(deviceInfos) {
   }
   selectors.forEach((select, selectorIndex) => {
     if (select.id == "audioOutput") {
-      console.log("Set default audio output device");
+      console.log("Set audio output device");
       let selectOptionsArray = Array.from(select.options)
       let lastAudioOutputSelectedValue = getCookie("lastAudioOutputSelectedValue");
       if (lastAudioOutputSelectedValue && selectOptionsArray.some(el => el.value == getCookie("lastAudioOutputSelectedValue"))) {
-        console.log("Get lastAudioOutputSelectedValue in cookie");
-        console.log(lastAudioOutputSelectedValue);
+        console.log("Get lastAudioOutputSelectedValue(" + lastAudioOutputSelectedValue + ") in cookie");
         select.value = lastAudioOutputSelectedValue;
         attachSinkId(videoElement, lastAudioOutputSelectedValue);
       } else {
@@ -72,6 +71,7 @@ function gotDevices(deviceInfos) {
       }
     } else {
       if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+        console.log("Set " + select.id + " device");
         select.value = values[selectorIndex];
       }
     }
