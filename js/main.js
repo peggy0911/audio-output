@@ -1,11 +1,9 @@
 'use strict';
 
 const videoElement = document.querySelector('video');
-// const audioInputSelect = document.querySelector('select#audioSource');
-const audioInputSelect = document.createElement('audioSource');
+const audioInputSelect = document.querySelector('select#audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
-// const videoSelect = document.querySelector('select#videoSource');
-const videoSelect = document.createElement('videoSource');
+const videoSelect = document.querySelector('select#videoSource');
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 const audioOutputExcludeKeys = ["display", "bluetooth"]
 
@@ -130,10 +128,9 @@ function start() {
   const videoSource = videoSelect.value;
   const constraints = {
     audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-    // video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+    video: {deviceId: videoSource ? {exact: videoSource} : undefined}
   };
-  // navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
-  navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+  navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
 }
 
 audioInputSelect.onchange = start;
