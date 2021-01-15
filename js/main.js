@@ -53,12 +53,11 @@ function gotDevices(deviceInfos) {
         console.log("Default audioOutputSelectdText includes display or bluetooth");
         for (let option_element of Array.from(select.options)) {
           let option_text = option_element.text.toLowerCase();
-          let option_value = option_element.value.toLowerCase();
           // console.log('Option Text : ' + option_text);
           // console.log('Option Value : ' + option_value);
           // console.log("\n\r");
           if (!option_text.includes("display") && !option_text.includes("bluetooth")) {
-            console.log(option_value + " : " + option_text + "attachSinkId")
+            console.log(option_element.value + " : " + option_text + "attachSinkId")
             select.value = option_element.value;
             // console.log(audioOutputSelect);
             // console.log(audioOutputSelect.value);
