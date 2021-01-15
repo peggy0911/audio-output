@@ -62,6 +62,7 @@ function gotDevices(deviceInfos) {
           if (!option_text.includes("display audio") && !option_text.includes("bluetooth")) {
             console.log(option_value + " : " + option_text + "attachSinkId")
             select.value = option_element.value;
+            attachSinkId(videoElement, audioOutputSelect.value);
             break;
           }
         }
