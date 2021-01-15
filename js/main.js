@@ -32,7 +32,7 @@ function gotDevices(deviceInfos) {
       select.removeChild(select.firstChild);
     }
   });
-  console.log(deviceInfo)
+  console.log(deviceInfos)
   for (let i = 0; i !== deviceInfos.length; ++i) {
     const deviceInfo = deviceInfos[i];
     const option = document.createElement('option');
