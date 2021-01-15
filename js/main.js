@@ -47,7 +47,7 @@ function gotDevices(deviceInfos) {
       console.log("select id == audioOutput")
       console.log(audioOutputSelect);
       console.log(audioOutputSelect.value);
-      let audioOutputSelectdText = audioOutputSelect.options[audioOutputSelect.selectedIndex].text;
+      let audioOutputSelectdText = audioOutputSelect.options[audioOutputSelect.selectedIndex].text.toLowerCase();
       console.log(audioOutputSelectdText);
       if (audioOutputSelectdText.includes("display") || audioOutputSelectdText.includes("bluetooth")) {
         console.log("Default audioOutputSelectdText includes display or bluetooth");
