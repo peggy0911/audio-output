@@ -43,25 +43,20 @@ function gotDevices(deviceInfos) {
     }
   }
   selectors.forEach((select, selectorIndex) => {
-    // console.log('select: ');
-    // console.log(select);
-    // console.log('selectorIndex: ');
-    // console.log(selectorIndex);
-    // console.log('selector id: ');
-    // console.log(select.id);
     if (select.id == "audioOutput") {
       console.log("select id == audioOutput")
       console.log(audioOutputSelect);
       console.log(audioOutputSelect.value);
-      console.log(audioOutputSelect.options[audioOutputSelect.selectedIndex].text);
-      // var audioOutputSelectArray = Array.from(audioOutputSelect.options);
-      for (let option_element of Array.from(select.options)) {
-        let option_text = option_element.text.toLowerCase();
-        let option_value = option_element.value.toLowerCase();
-        console.log('Option Text : ' + option_text);
-        console.log('Option Value : ' + option_value);
-        console.log("\n\r");
-        if (option_value != "default" || option_value != "communications") {
+      let audioOutputSelectdText = audioOutputSelect.options[audioOutputSelect.selectedIndex].text;
+      console.log(audioOutputSelectdText);
+      if (audioOutputSelectdText.includes("display") || audioOutputSelectdText.includes("bluetooth")) {
+        console.log("Default audioOutputSelectdText includes display or bluetooth");
+        for (let option_element of Array.from(select.options)) {
+          let option_text = option_element.text.toLowerCase();
+          let option_value = option_element.value.toLowerCase();
+          console.log('Option Text : ' + option_text);
+          console.log('Option Value : ' + option_value);
+          console.log("\n\r");
           if (!option_text.includes("display") && !option_text.includes("bluetooth")) {
             console.log(option_value + " : " + option_text + "attachSinkId")
             select.value = option_element.value;
@@ -71,8 +66,32 @@ function gotDevices(deviceInfos) {
             attachSinkId(videoElement, audioOutputSelect.value);
             break;
           }
+        };
+      } else {
+        console.log("Default audioOutputSelectdText not includes display or bluetooth");
+        if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+          console.log("Array.prototype.slice.call");
+          select.value = values[selectorIndex];
         }
-      };
+      }
+      // for (let option_element of Array.from(select.options)) {
+      //   let option_text = option_element.text.toLowerCase();
+      //   let option_value = option_element.value.toLowerCase();
+      //   console.log('Option Text : ' + option_text);
+      //   console.log('Option Value : ' + option_value);
+      //   console.log("\n\r");
+      //   if (option_value != "default" || option_value != "communications") {
+      //     if (!option_text.includes("display") && !option_text.includes("bluetooth")) {
+      //       console.log(option_value + " : " + option_text + "attachSinkId")
+      //       select.value = option_element.value;
+      //       console.log(audioOutputSelect);
+      //       console.log(audioOutputSelect.value);
+      //       console.log(audioOutputSelect.options[audioOutputSelect.selectedIndex].text);
+      //       attachSinkId(videoElement, audioOutputSelect.value);
+      //       break;
+      //     }
+      //   }
+      // };
     } else {
       if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
         select.value = values[selectorIndex];
