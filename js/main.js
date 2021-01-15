@@ -50,20 +50,19 @@ function gotDevices(deviceInfos) {
   selectors.forEach((select, selectorIndex) => {
     if (select.id == "audioOutput") {
       console.log("Set default audio output device");
+      let selectOptionsArray = Array.from(select.options)
       let lastAudioOutputSelectedValue = getCookie("lastAudioOutputSelectedValue");
-      if (lastAudioOutputSelectedValue) {
+      if (lastAudioOutputSelectedValue && selectOptionsArray.some(el => el.value == getCookie("lastAudioOutputSelectedValue"))) {
         console.log("Get lastAudioOutputSelectedValue in cookie");
         console.log(lastAudioOutputSelectedValue);
         select.value = lastAudioOutputSelectedValue;
         attachSinkId(videoElement, lastAudioOutputSelectedValue);
       } else {
-        console.log("lastAudioOutputSelectedValue not in cookie");
-        for (let option_element of Array.from(select.options)) {
-          let option_text = option_element.text.toLowerCase();
+        for (let option_element of selectOptionsArray) {
           let option_value = option_element.value.toLowerCase();
           if (option_value != "default" && option_value != "communications") {
-            if (!audioOutputExcludeKeys.some(key => option_text.includes(key))) {
-              console.log("Attach audio output device to " + option_text + "(" + option_element.value + ")")
+            if (!audioOutputExcludeKeys.some(key => option_element.text.toLowerCase().includes(key))) {
+              console.log("Attach audio output device to " + option_element.text + "(" + option_element.value + ")")
               select.value = option_element.value;
               attachSinkId(videoElement, option_element.value);
               break;
