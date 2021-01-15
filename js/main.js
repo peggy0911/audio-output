@@ -32,7 +32,7 @@ function gotDevices(deviceInfos) {
       select.removeChild(select.firstChild);
     }
   });
-  console.log(deviceInfos)
+  console.log(deviceInfo)
   for (let i = 0; i !== deviceInfos.length; ++i) {
     const deviceInfo = deviceInfos[i];
     const option = document.createElement('option');
@@ -132,7 +132,8 @@ function start() {
     audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
     // video: {deviceId: videoSource ? {exact: videoSource} : undefined}
   };
-  navigator.mediaDevices.getUserMedia(constraints).then(gotDevices).catch(handleError);
+  // navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+  navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 }
 
 audioInputSelect.onchange = start;
