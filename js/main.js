@@ -63,7 +63,7 @@ function gotDevices(deviceInfos) {
             // console.log(audioOutputSelect);
             // console.log(audioOutputSelect.value);
             // console.log(audioOutputSelect.options[audioOutputSelect.selectedIndex].text);
-            // attachSinkId(videoElement, audioOutputSelect.value);
+            attachSinkId(videoElement, audioOutputSelect.value);
             break;
           }
         };
