@@ -1,9 +1,11 @@
 'use strict';
 
 const videoElement = document.querySelector('video');
-const audioInputSelect = document.querySelector('select#audioSource');
+// const audioInputSelect = document.querySelector('select#audioSource');
+const audioInputSelect = document.createElement('audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
-const videoSelect = document.querySelector('select#videoSource');
+// const videoSelect = document.querySelector('select#videoSource');
+const videoSelect = document.createElement('videoSource');
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 const audioOutputExcludeKeys = ["display", "bluetooth"]
 
