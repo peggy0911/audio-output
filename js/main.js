@@ -9,6 +9,19 @@ const audioOutputExcludeKeys = ["display", "bluetooth"]
 
 audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
+var today = new Date();
+var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+
+function setCookie(name, value) {
+  document.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+}
+
+function getCookie(name) {
+  var re = new RegExp(name + "=([^;]+)");
+  var value = re.exec(document.cookie);
+  return (value != null) ? unescape(value[1]) : null;
+}
+
 function gotDevices(deviceInfos) {
   // Handles being called several times to update labels. Preserve values.
   const values = selectors.map(select => select.value);
@@ -37,18 +50,27 @@ function gotDevices(deviceInfos) {
   selectors.forEach((select, selectorIndex) => {
     if (select.id == "audioOutput") {
       console.log("Set default audio output device");
-      for (let option_element of Array.from(select.options)) {
-        let option_text = option_element.text.toLowerCase();
-        let option_value = option_element.value.toLowerCase();
-        if (option_value != "default" && option_value != "communications") {
-          if (!audioOutputExcludeKeys.some(key => option_text.includes(key))) {
-            console.log("Attach audio output device to " + option_text + "(" + option_element.value + ")")
-            select.value = option_element.value;
-            attachSinkId(videoElement, option_element.value);
-            break;
+      let lastAudioOutputSelectedValue = getCookie("lastAudioOutputSelectedValue");
+      if (lastAudioOutputSelectedValue) {
+        console.log("Get lastAudioOutputSelectedValue in cookie");
+        console.log(lastAudioOutputSelectedValue);
+        select.value = lastAudioOutputSelectedValue;
+        attachSinkId(videoElement, lastAudioOutputSelectedValue);
+      } else {
+        console.log("lastAudioOutputSelectedValue not in cookie");
+        for (let option_element of Array.from(select.options)) {
+          let option_text = option_element.text.toLowerCase();
+          let option_value = option_element.value.toLowerCase();
+          if (option_value != "default" && option_value != "communications") {
+            if (!audioOutputExcludeKeys.some(key => option_text.includes(key))) {
+              console.log("Attach audio output device to " + option_text + "(" + option_element.value + ")")
+              select.value = option_element.value;
+              attachSinkId(videoElement, option_element.value);
+              break;
+            }
           }
-        }
-      };
+        };
+      }
     } else {
       if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
         select.value = values[selectorIndex];
@@ -83,6 +105,7 @@ function attachSinkId(element, sinkId) {
 function changeAudioDestination() {
   const audioDestination = audioOutputSelect.value;
   attachSinkId(videoElement, audioDestination);
+  setCookie("lastAudioOutputSelectedValue", audioDestination);
 }
 
 function gotStream(stream) {
