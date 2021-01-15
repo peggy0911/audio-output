@@ -49,7 +49,7 @@ function gotDevices(deviceInfos) {
       console.log("Default audio output device label includes display or bluetooth");
       for (let option_element of Array.from(select.options)) {
         let option_text = option_element.text.toLowerCase();
-        if (audioOutputExcludeKeys.some(key => !option_text.includes(key))) {
+        if (!audioOutputExcludeKeys.some(key => option_text.includes(key))) {
           console.log("Attach audio output device to " + option_text + "(" + option_element.value + ")")
           select.value = option_element.value;
           attachSinkId(videoElement, option_element.value);
