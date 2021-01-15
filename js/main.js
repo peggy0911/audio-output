@@ -13,6 +13,7 @@ const audioInputSelect = document.querySelector('select#audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
 const videoSelect = document.querySelector('select#videoSource');
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+const audioOutputExcludeKeys = ["display", "bluetooth"]
 
 audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
@@ -44,26 +45,17 @@ function gotDevices(deviceInfos) {
   }
   selectors.forEach((select, selectorIndex) => {
     let audioOutputSelectdText = audioOutputSelect.options[audioOutputSelect.selectedIndex].text.toLowerCase();
-    console.log(audioOutputSelectdText);
-    if (select.id == "audioOutput" && (audioOutputSelectdText.includes("display") || audioOutputSelectdText.includes("bluetooth"))) {
-      console.log("Default audioOutputSelectdText includes display or bluetooth");
+    if (select.id == "audioOutput" && audioOutputExcludeKeys.some(key => audioOutputSelectdText.includes(key))) {
+      console.log("Default audio output device label includes display or bluetooth");
       for (let option_element of Array.from(select.options)) {
         let option_text = option_element.text.toLowerCase();
-        if (!option_text.includes("display") && !option_text.includes("bluetooth")) {
+        if (audioOutputExcludeKeys.some(key => !option_text.includes(key))) {
           console.log("Attach audio output device to " + option_text + "(" + option_element.value + ")")
           select.value = option_element.value;
           attachSinkId(videoElement, option_element.value);
           break;
         }
       };
-      // if (audioOutputSelectdText.includes("display") || audioOutputSelectdText.includes("bluetooth")) {
-        
-      // } else {
-      //   console.log("Default audioOutputSelectdText not includes display or bluetooth");
-      //   if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
-      //     select.value = values[selectorIndex];
-      //   }
-      // }
     } else {
       if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
         select.value = values[selectorIndex];
