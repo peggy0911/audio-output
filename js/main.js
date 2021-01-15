@@ -43,55 +43,27 @@ function gotDevices(deviceInfos) {
     }
   }
   selectors.forEach((select, selectorIndex) => {
-    if (select.id == "audioOutput") {
-      console.log("select id == audioOutput")
-      // console.log(audioOutputSelect);
-      // console.log(audioOutputSelect.value);
-      let audioOutputSelectdText = audioOutputSelect.options[audioOutputSelect.selectedIndex].text.toLowerCase();
-      // console.log(audioOutputSelectdText);
-      if (audioOutputSelectdText.includes("display") || audioOutputSelectdText.includes("bluetooth")) {
-        console.log("Default audioOutputSelectdText includes display or bluetooth");
-        for (let option_element of Array.from(select.options)) {
-          let option_text = option_element.text.toLowerCase();
-
-          // console.log('Option Text : ' + option_text);
-          // console.log('Option Value : ' + option_value);
-          // console.log("\n\r");
-          if (!option_text.includes("display") && !option_text.includes("bluetooth")) {
-            console.log(option_element.value + " : " + option_text + "attachSinkId")
-            select.value = option_element.value;
-            // console.log(audioOutputSelect);
-            // console.log(audioOutputSelect.value);
-            // console.log(audioOutputSelect.options[audioOutputSelect.selectedIndex].text);
-            attachSinkId(videoElement, option_element.value);
-            break;
-          }
-        };
-      } else {
-        console.log("Default audioOutputSelectdText not includes display or bluetooth");
-        if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
-          console.log("Array.prototype.slice.call");
-          select.value = values[selectorIndex];
+    let audioOutputSelectdText = audioOutputSelect.options[audioOutputSelect.selectedIndex].text.toLowerCase();
+    console.log(audioOutputSelectdText);
+    if (select.id == "audioOutput" && (audioOutputSelectdText.includes("display") || audioOutputSelectdText.includes("bluetooth"))) {
+      console.log("Default audioOutputSelectdText includes display or bluetooth");
+      for (let option_element of Array.from(select.options)) {
+        let option_text = option_element.text.toLowerCase();
+        if (!option_text.includes("display") && !option_text.includes("bluetooth")) {
+          console.log("Attach audio output device to " + option_text + "(" + option_element.value + ")")
+          select.value = option_element.value;
+          attachSinkId(videoElement, option_element.value);
+          break;
         }
-      }
-      // for (let option_element of Array.from(select.options)) {
-      //   let option_text = option_element.text.toLowerCase();
-      //   let option_value = option_element.value.toLowerCase();
-      //   console.log('Option Text : ' + option_text);
-      //   console.log('Option Value : ' + option_value);
-      //   console.log("\n\r");
-      //   if (option_value != "default" || option_value != "communications") {
-      //     if (!option_text.includes("display") && !option_text.includes("bluetooth")) {
-      //       console.log(option_value + " : " + option_text + "attachSinkId")
-      //       select.value = option_element.value;
-      //       console.log(audioOutputSelect);
-      //       console.log(audioOutputSelect.value);
-      //       console.log(audioOutputSelect.options[audioOutputSelect.selectedIndex].text);
-      //       attachSinkId(videoElement, audioOutputSelect.value);
-      //       break;
-      //     }
+      };
+      // if (audioOutputSelectdText.includes("display") || audioOutputSelectdText.includes("bluetooth")) {
+        
+      // } else {
+      //   console.log("Default audioOutputSelectdText not includes display or bluetooth");
+      //   if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+      //     select.value = values[selectorIndex];
       //   }
-      // };
+      // }
     } else {
       if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
         select.value = values[selectorIndex];
