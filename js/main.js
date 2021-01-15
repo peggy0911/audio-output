@@ -12,7 +12,7 @@ const videoElement = document.querySelector('video');
 const audioInputSelect = document.querySelector('select#audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
 const videoSelect = document.querySelector('select#videoSource');
-const selectors = [audioInputSelect, audioOutputSelect];
+const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 
 audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
@@ -35,6 +35,9 @@ function gotDevices(deviceInfos) {
     } else if (deviceInfo.kind === 'audiooutput') {
       option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
       audioOutputSelect.appendChild(option);
+    } else if (deviceInfo.kind === 'videoinput') {
+      option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
+      videoSelect.appendChild(option);
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
@@ -50,6 +53,7 @@ function gotDevices(deviceInfos) {
         console.log("Default audioOutputSelectdText includes display or bluetooth");
         for (let option_element of Array.from(select.options)) {
           let option_text = option_element.text.toLowerCase();
+
           // console.log('Option Text : ' + option_text);
           // console.log('Option Value : ' + option_value);
           // console.log("\n\r");
