@@ -1,10 +1,8 @@
 'use strict';
 
 const videoElement = document.querySelector('video');
-// const audioInputSelect = document.querySelector('select#audioSource');
 const audioInputSelect = document.createElement('audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
-// const videoSelect = document.querySelector('select#videoSource');
 const videoSelect = document.createElement('videoSource');
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 const audioOutputExcludeKeys = ["display", "bluetooth"]
@@ -79,8 +77,6 @@ function gotDevices(deviceInfos) {
     }
   });
 }
-
-// navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
 // Attach audio output device to video element using device/sink ID.
 function attachSinkId(element, sinkId) {
