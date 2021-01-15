@@ -71,7 +71,6 @@ function gotDevices(deviceInfos) {
       }
     } else {
       if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
-        console.log("Set " + select.id + " device");
         select.value = values[selectorIndex];
       }
     }
