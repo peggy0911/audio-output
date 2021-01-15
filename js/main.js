@@ -25,7 +25,6 @@ function gotDevices(deviceInfos) {
       select.removeChild(select.firstChild);
     }
   });
-  console.log(deviceInfos)
   for (let i = 0; i !== deviceInfos.length; ++i) {
     const deviceInfo = deviceInfos[i];
     const option = document.createElement('option');
@@ -44,16 +43,18 @@ function gotDevices(deviceInfos) {
     }
   }
   selectors.forEach((select, selectorIndex) => {
-    let audioOutputSelectdText = audioOutputSelect.options[audioOutputSelect.selectedIndex].text.toLowerCase();
-    if (select.id == "audioOutput" && audioOutputExcludeKeys.some(key => audioOutputSelectdText.includes(key))) {
-      console.log("Default audio output device label includes display or bluetooth");
+    if (select.id == "audioOutput") {
+      console.log("Set default audio output device");
       for (let option_element of Array.from(select.options)) {
         let option_text = option_element.text.toLowerCase();
-        if (!audioOutputExcludeKeys.some(key => option_text.includes(key))) {
-          console.log("Attach audio output device to " + option_text + "(" + option_element.value + ")")
-          select.value = option_element.value;
-          attachSinkId(videoElement, option_element.value);
-          break;
+        let option_value = option_element.value.toLowerCase();
+        if (option_value != "default" && option_value != "communications") {
+          if (!audioOutputExcludeKeys.some(key => option_text.includes(key))) {
+            console.log("Attach audio output device to " + option_text + "(" + option_element.value + ")")
+            select.value = option_element.value;
+            attachSinkId(videoElement, option_element.value);
+            break;
+          }
         }
       };
     } else {
@@ -68,9 +69,6 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
 // Attach audio output device to video element using device/sink ID.
 function attachSinkId(element, sinkId) {
-  console.log("attachSinkId")
-  console.log(element)
-  console.log(sinkId)
   if (typeof element.sinkId !== 'undefined') {
     element.setSinkId(sinkId)
         .then(() => {
