@@ -5,6 +5,8 @@ const audioInputSelect = document.createElement('audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
 const videoSelect = document.createElement('videoSource');
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+
+// Set keyword of external speakers
 const audioOutputExcludeKeys = ["display", "bluetooth"]
 
 audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
@@ -52,6 +54,7 @@ function gotDevices(deviceInfos) {
       console.log("Set audio output device");
       let selectOptionsArray = Array.from(select.options)
       let lastAudioOutputSelectedValue = getCookie("lastAudioOutputSelectedValue");
+      // If user's last setting exists in the cookie and the devices list, use it as the audio output
       if (lastAudioOutputSelectedValue && selectOptionsArray.some(el => el.value == getCookie("lastAudioOutputSelectedValue"))) {
         console.log("Get lastAudioOutputSelectedValue(" + lastAudioOutputSelectedValue + ") in cookie");
         select.value = lastAudioOutputSelectedValue;
@@ -59,7 +62,9 @@ function gotDevices(deviceInfos) {
       } else {
         for (let option_element of selectOptionsArray) {
           let option_value = option_element.value.toLowerCase();
+          // Don't use deviceId is default and communications as the audio output, because these two options will change with the user's system settings
           if (option_value != "default" && option_value != "communications") {
+            // Don't use device label contains the keyword in audioOutputExcludeKeys as the audio output
             if (!audioOutputExcludeKeys.some(key => option_element.text.toLowerCase().includes(key))) {
               console.log("Attach audio output device to " + option_element.text + "(" + option_element.value + ")")
               select.value = option_element.value;
@@ -101,6 +106,7 @@ function attachSinkId(element, sinkId) {
 function changeAudioDestination() {
   const audioDestination = audioOutputSelect.value;
   attachSinkId(videoElement, audioDestination);
+  // Save user's last setting in cookie
   setCookie("lastAudioOutputSelectedValue", audioDestination);
 }
 
