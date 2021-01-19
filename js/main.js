@@ -26,6 +26,7 @@ function getCookie(name) {
 
 function gotDevices() {
   const deviceInfos = navigator.mediaDevices.enumerateDevices();
+  console.log(deviceInfos);
   // Handles being called several times to update labels. Preserve values.
   const values = selectors.map(select => select.value);
   selectors.forEach(select => {
