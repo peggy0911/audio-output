@@ -79,7 +79,7 @@ function gotDevices(deviceInfos) {
   });
 }
 
-// Attach audio output device to video element using device/sink ID.
+// Attach audio output device to audio element using device/sink ID.
 function attachSinkId(element, sinkId) {
   if (typeof element.sinkId !== 'undefined') {
     element.setSinkId(sinkId)
