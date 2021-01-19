@@ -1,10 +1,10 @@
 'use strict';
 
-const videoElement = document.createElement('video');
+const audioElement = document.createElement('audio');
 const audioInputSelect = document.createElement('audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
-const videoSelect = document.createElement('videoSource');
-const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+// const videoSelect = document.createElement('videoSource');
+const selectors = [audioInputSelect, audioOutputSelect];
 
 // Set keyword of external speakers
 const audioOutputExcludeKeys = ["display", "bluetooth"]
@@ -44,9 +44,9 @@ async function gotDevices() {
     } else if (deviceInfo.kind === 'audiooutput') {
       option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
       audioOutputSelect.appendChild(option);
-    } else if (deviceInfo.kind === 'videoinput') {
-      option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
-      videoSelect.appendChild(option);
+    // } else if (deviceInfo.kind === 'videoinput') {
+    //   option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
+    //   videoSelect.appendChild(option);
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
@@ -60,7 +60,7 @@ async function gotDevices() {
       if (lastAudioOutputSelectedValue && selectOptionsArray.some(el => el.value == getCookie("lastAudioOutputSelectedValue"))) {
         console.log("Get lastAudioOutputSelectedValue(" + lastAudioOutputSelectedValue + ") in cookie");
         select.value = lastAudioOutputSelectedValue;
-        attachSinkId(videoElement, lastAudioOutputSelectedValue);
+        attachSinkId(audioElement, lastAudioOutputSelectedValue);
       } else {
         for (let option_element of selectOptionsArray) {
           let option_value = option_element.value.toLowerCase();
@@ -70,7 +70,7 @@ async function gotDevices() {
             if (!audioOutputExcludeKeys.some(key => option_element.text.toLowerCase().includes(key))) {
               console.log("Attach audio output device to " + option_element.text + "(" + option_element.value + ")")
               select.value = option_element.value;
-              attachSinkId(videoElement, option_element.value);
+              attachSinkId(audioElement, option_element.value);
               break;
             }
           }
@@ -107,14 +107,14 @@ function attachSinkId(element, sinkId) {
 
 function changeAudioDestination() {
   const audioDestination = audioOutputSelect.value;
-  attachSinkId(videoElement, audioDestination);
+  attachSinkId(audioElement, audioDestination);
   // Save user's last setting in cookie
   setCookie("lastAudioOutputSelectedValue", audioDestination);
 }
 
 function gotStream(stream) {
   window.stream = stream; // make stream available to console
-  videoElement.srcObject = stream;
+  audioElement.srcObject = stream;
   // Refresh button list in case labels have become available
   return navigator.mediaDevices.enumerateDevices();
 }
@@ -129,8 +129,8 @@ function start() {
       track.stop();
     });
   }
-  const audioSource = audioInputSelect.value;
-  const videoSource = videoSelect.value;
+  // const audioSource = audioInputSelect.value;
+  // const videoSource = videoSelect.value;
   const constraints = {
     audio: true
   };
