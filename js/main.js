@@ -28,8 +28,8 @@ function getCookie(name) {
   return (value != null) ? unescape(value[1]) : null;
 }
 
-async function gotDevices() {
-  const deviceInfos = await navigator.mediaDevices.enumerateDevices();
+function gotDevices(deviceInfos) {
+  // const deviceInfos = await navigator.mediaDevices.enumerateDevices();
   console.log(deviceInfos);
   // Handles being called several times to update labels. Preserve values.
   const values = selectors.map(select => select.value);
@@ -89,9 +89,9 @@ async function gotDevices() {
 }
 
 // Attach audio output device to video element using device/sink ID.
-async function attachSinkId(element, sinkId) {
+function attachSinkId(element, sinkId) {
   if (typeof element.sinkId !== 'undefined') {
-    await element.setSinkId(sinkId)
+    element.setSinkId(sinkId)
         .then(() => {
           console.log(`Success, audio output device attached: ${sinkId}`);
         })
@@ -139,7 +139,7 @@ function start() {
   const constraints = {
     audio: true
   };
-  navigator.mediaDevices.getUserMedia(constraints).then(gotDevices).catch(handleError);
+  navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
 }
 
 audioOutputSelect.onchange = changeAudioDestination;
