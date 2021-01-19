@@ -2,7 +2,7 @@
 
 // const context = new AudioContext();
 // const audioElement = new Audio();
-const audioElement = document.createElement('audio');
+const audioElement = document.querySelector('audio');
 // const dest = context.createMediaStreamDestination();
 // audioElement.srcObject = dest.stream;
 const audioInputSelect = document.createElement('audioSource');
