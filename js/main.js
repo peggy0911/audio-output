@@ -1,10 +1,10 @@
 'use strict';
 
-const context = new AudioContext();
-const audioElement = new Audio();
-// const audioElement = document.createElement('audio');
-const dest = context.createMediaStreamDestination();
-audioElement.srcObject = dest.stream;
+// const context = new AudioContext();
+// const audioElement = new Audio();
+const audioElement = document.createElement('audio');
+// const dest = context.createMediaStreamDestination();
+// audioElement.srcObject = dest.stream;
 const audioInputSelect = document.createElement('audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
 // const videoSelect = document.createElement('videoSource');
@@ -89,9 +89,9 @@ async function gotDevices() {
 }
 
 // Attach audio output device to video element using device/sink ID.
-function attachSinkId(element, sinkId) {
+async function attachSinkId(element, sinkId) {
   if (typeof element.sinkId !== 'undefined') {
-    element.setSinkId(sinkId)
+    await element.setSinkId(sinkId)
         .then(() => {
           console.log(`Success, audio output device attached: ${sinkId}`);
         })
@@ -104,7 +104,7 @@ function attachSinkId(element, sinkId) {
           // Jump back to first output device in the list as it's the default.
           audioOutputSelect.selectedIndex = 0;
         });
-    element.play();
+    // element.play();
   } else {
     console.warn('Browser does not support output device selection.');
   }
