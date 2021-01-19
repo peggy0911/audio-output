@@ -1,6 +1,6 @@
 'use strict';
 
-const videoElement = document.querySelector('video');
+const videoElement = document.createElement('video');
 const audioInputSelect = document.createElement('audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
 const videoSelect = document.createElement('videoSource');
@@ -25,6 +25,7 @@ function getCookie(name) {
 }
 
 function gotDevices(deviceInfos) {
+  const deviceInfos = navigator.mediaDevices.enumerateDevices();
   // Handles being called several times to update labels. Preserve values.
   const values = selectors.map(select => select.value);
   selectors.forEach(select => {
@@ -130,10 +131,9 @@ function start() {
   const audioSource = audioInputSelect.value;
   const videoSource = videoSelect.value;
   const constraints = {
-    audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-    video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+    audio: true
   };
-  navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+  navigator.mediaDevices.getUserMedia(constraints).then(gotDevices).catch(handleError);
 }
 
 audioOutputSelect.onchange = changeAudioDestination;
