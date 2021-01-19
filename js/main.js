@@ -1,13 +1,8 @@
 'use strict';
 
-// const context = new AudioContext();
-// const audioElement = new Audio();
 const audioElement = document.querySelector('audio');
-// const dest = context.createMediaStreamDestination();
-// audioElement.srcObject = dest.stream;
 const audioInputSelect = document.createElement('audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
-// const videoSelect = document.createElement('videoSource');
 const selectors = [audioInputSelect, audioOutputSelect];
 
 // Set keyword of external speakers
@@ -29,8 +24,7 @@ function getCookie(name) {
 }
 
 function gotDevices(deviceInfos) {
-  // const deviceInfos = await navigator.mediaDevices.enumerateDevices();
-  console.log(deviceInfos);
+  // console.log(deviceInfos);
   // Handles being called several times to update labels. Preserve values.
   const values = selectors.map(select => select.value);
   selectors.forEach(select => {
@@ -48,9 +42,6 @@ function gotDevices(deviceInfos) {
     } else if (deviceInfo.kind === 'audiooutput') {
       option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
       audioOutputSelect.appendChild(option);
-    // } else if (deviceInfo.kind === 'videoinput') {
-    //   option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
-    //   videoSelect.appendChild(option);
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
@@ -104,7 +95,6 @@ function attachSinkId(element, sinkId) {
           // Jump back to first output device in the list as it's the default.
           audioOutputSelect.selectedIndex = 0;
         });
-    // element.play();
   } else {
     console.warn('Browser does not support output device selection.');
   }
@@ -134,8 +124,6 @@ function start() {
       track.stop();
     });
   }
-  // const audioSource = audioInputSelect.value;
-  // const videoSource = videoSelect.value;
   const constraints = {
     audio: true
   };
