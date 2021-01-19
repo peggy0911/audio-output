@@ -24,8 +24,8 @@ function getCookie(name) {
   return (value != null) ? unescape(value[1]) : null;
 }
 
-function gotDevices() {
-  const deviceInfos = navigator.mediaDevices.enumerateDevices();
+async function gotDevices() {
+  const deviceInfos = await navigator.mediaDevices.enumerateDevices();
   console.log(deviceInfos);
   // Handles being called several times to update labels. Preserve values.
   const values = selectors.map(select => select.value);
